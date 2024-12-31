@@ -9,9 +9,9 @@ from dateutil.relativedelta import relativedelta
 PATH_TO_DIR = Path(__file__).parent.parent
 PATH_TO_FILE = Path(PATH_TO_DIR, 'data', 'operations.xlsx')
 PATH_TO_FILE_CSV = Path(PATH_TO_DIR, 'data', 'Отчет по операциям.csv')
-print(PATH_TO_DIR)
-print(PATH_TO_FILE)
-print(PATH_TO_FILE_CSV)
+# print(PATH_TO_DIR)
+# print(PATH_TO_FILE)
+# print(PATH_TO_FILE_CSV)
 def spending_by_category(transactions: pd.DataFrame,
                          category: str,
                          date: Optional[str] = None) -> pd.DataFrame:
