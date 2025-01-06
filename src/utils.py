@@ -29,8 +29,12 @@ def get_time_period(date: str) -> list:
     str_date_upper = datetime.strftime(obj_date_upper, '%d.%m.%Y %H:%M:%S')
     return ([str_date_lower, str_date_upper])
 
+def time_based_greeting(date: str) -> str:
+    '''Функция, принимает на вход строку с датой и временем в формате YYYY-MM-DD HH:MM:SS и возвращает сообщение
+    в виде "Доброе утро" или "Добрый день" или "Доброй ночи" или "Добрый вечер", в зависимости от времени'''
 if __name__ == '__main__':
     print(get_time_period('2020-03-18 14:32:15'))
     print(get_time_period('2020-03-18'))
     print(get_time_period('2020-18-03 14:15:15'))
     print(get_time_period('08.08.2020 12:00:00'))
+    date = '2019-08-08 4:32:00 '
