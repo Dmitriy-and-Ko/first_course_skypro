@@ -84,4 +84,5 @@ if __name__ == "__main__":
     print(PATH_TO_DIR)
     print(get_data_for_json_about_currency(PATH_TO_JSON))
     print(get_data_for_json_about_stocks(PATH_TO_JSON))
+    print(get_price_of_stock('AAPL'))
 
