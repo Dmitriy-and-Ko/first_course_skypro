@@ -22,11 +22,14 @@ def get_price_of_stock(stock_name : str) -> str:
     """Функция принимает на вход название одной из 5 акций: AAPL, AMZN, GOOGL, MSFT, TSLA и возвращает её
     действительную цену"""
     response = requests.get(f"https://api.twelvedata.com/price?symbol={stock_name}&apikey={STOCK_API_KEY}")
-    if response.status_code == 200:
+    # if response.status_code == 200:
+    try:
         json_str = response.text
         dict_result = json.loads(json_str)
         price_stock = dict_result.get('price')
         return price_stock
+    except requests.RequestException as ex:
+        return f"Произошла ошибка {ex}"
 
 def get_currency_rate(current_string: str) -> float:
     """Функция принимает на вход название валюты в виде USD или EUR и возвращает её курс по отношению к рублю"""
