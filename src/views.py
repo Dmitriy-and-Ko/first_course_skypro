@@ -22,7 +22,6 @@ def get_price_of_stock(stock_name : str) -> str:
     """Функция принимает на вход название одной из 5 акций: AAPL, AMZN, GOOGL, MSFT, TSLA и возвращает её
     действительную цену"""
     response = requests.get(f"https://api.twelvedata.com/price?symbol={stock_name}&apikey={STOCK_API_KEY}")
-    # if response.status_code == 200:
     try:
         json_str = response.text
         dict_result = json.loads(json_str)
@@ -33,24 +32,24 @@ def get_price_of_stock(stock_name : str) -> str:
 
 def get_currency_rate(current_string: str) -> float:
     """Функция принимает на вход название валюты в виде USD или EUR и возвращает её курс по отношению к рублю"""
+    try:
+        url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={current_string}&amount=1"
 
-    url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={current_string}&amount=1"
+        'apikey: YOUR API KEY'
 
-    'apikey: YOUR API KEY'
+        payload = {}
+        headers = {
+            "apikey": CURRENCY_API_KEY
+        }
 
-    payload = {}
-    headers = {
-        "apikey": CURRENCY_API_KEY
-    }
-
-    response = requests.request("GET", url, headers=headers, data=payload)
-
-    status_code = response.status_code
-    # print(status_code)
-    result = response.text
-    dict_result = json.loads(result)
-    currency_price = dict_result.get('result')
-    return float(currency_price)
+        response = requests.request("GET", url, headers=headers, data=payload)
+        # status_code = response.status_code
+        result = response.text
+        dict_result = json.loads(result)
+        currency_price = dict_result.get('result')
+        return currency_price
+    except requests.RequestException as ex:
+        return f"Произошла ошибка {ex}"
 
 
 def get_data_for_json_about_currency(path_json: str) -> dict:
@@ -88,4 +87,5 @@ if __name__ == "__main__":
     print(get_data_for_json_about_currency(PATH_TO_JSON))
     print(get_data_for_json_about_stocks(PATH_TO_JSON))
     print(get_price_of_stock('AAPL'))
+    print(get_currency_rate("USD"))
 
