@@ -27,10 +27,26 @@ def get_time_period(date: str) -> list:
                               second_upper_date)
     str_date_lower = datetime.strftime(obj_date_lower, '%d.%m.%Y %H:%M:%S')
     str_date_upper = datetime.strftime(obj_date_upper, '%d.%m.%Y %H:%M:%S')
-    return ([str_date_lower, str_date_upper])
+    return [str_date_lower, str_date_upper]
+
+def get_welcome_of_time() -> str:
+    """Функция возвращает приветствие в формате "???" , где ???— «Доброе утро» / «Добрый день» / «Добрыйвечер» /
+     «Доброй ночи» в зависимости от текущего времени."""
+    now_time = datetime.now()
+    hour_now = now_time.hour
+    if 4 <= hour_now <= 10:
+        return 'Good morning'
+    elif 11 <= hour_now <= 16:
+        return 'Good afternoon'
+    elif 17 <= hour_now <= 22:
+        return 'Good evening'
+    else:
+        return 'Good night'
 
 if __name__ == '__main__':
     print(get_time_period('2020-03-18 14:32:15'))
     print(get_time_period('2020-03-18'))
     print(get_time_period('2020-18-03 14:15:15'))
     print(get_time_period('08.08.2020 12:00:00'))
+    print(get_welcome_of_time())
+    print(type(get_welcome_of_time()))
