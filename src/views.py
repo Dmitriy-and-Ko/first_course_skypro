@@ -3,7 +3,7 @@ import os
 
 import requests
 from pathlib import Path
-
+import logging
 from dotenv import load_dotenv
 
 
@@ -17,6 +17,14 @@ load_dotenv(PATH_TO_ENV)
 STOCK_API_KEY = os.getenv("STOCK_API-KEY")
 CURRENCY_API_KEY = os.getenv('CURRENCY_API-KEY')
 
+PATH_TO_FILE_LOG = Path(PATH_TO_DIR, "logs", "views.log")
+
+logger = logging.getLogger("views")
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler(PATH_TO_FILE_LOG, encoding="UTF-8")
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
+file_handler.setFormatter(file_formatter)
+logger.addHandler(file_handler)
 
 def get_price_of_stock(stock_name : str) -> str:
     """Функция принимает на вход название одной из 5 акций: AAPL, AMZN, GOOGL, MSFT, TSLA и возвращает её
@@ -26,6 +34,9 @@ def get_price_of_stock(stock_name : str) -> str:
         json_str = response.text
         dict_result = json.loads(json_str)
         price_stock = dict_result.get('price')
+
+        logger.info(f"Получена цена акции {stock_name}")
+
         return price_stock
     except requests.RequestException as ex:
         return f"Произошла ошибка {ex}"
@@ -47,6 +58,9 @@ def get_currency_rate(current_string: str) -> float:
         result = response.text
         dict_result = json.loads(result)
         currency_price = dict_result.get('result')
+
+        logger.info(f"Получен курс {current_string} к RUB")
+
         return currency_price
     except requests.RequestException as ex:
         return f"Произошла ошибка {ex}"
@@ -63,6 +77,9 @@ def get_data_for_json_about_currency(path_json: str) -> dict:
         currency_price = get_currency_rate(element)
         list_of_currencies_price.append({"currency": element,
                                          "rate": currency_price})
+
+        logger.info(f"Сформирован курс валют для out_json.json файла по шаблону {path_json}")
+
     return list_of_currencies_price
 
 
@@ -77,6 +94,9 @@ def get_data_for_json_about_stocks(path_json: str) -> dict:
         stock_price = get_price_of_stock(element)
         list_of_stocks_price.append({"stock": element,
                                      "price": stock_price})
+
+        logger.info(f"Сформирован список цен акций для out_json.json файла по шаблону {path_json}")
+
     return list_of_stocks_price
 
 
