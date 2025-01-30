@@ -1,11 +1,10 @@
-import json
+
 import os
 
-import requests
-from pathlib import Path
+
 from unittest.mock import patch
 from src.views import get_price_of_stock, get_currency_rate
-from dotenv import load_dotenv
+
 
 
 @patch('requests.get')

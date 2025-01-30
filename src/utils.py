@@ -1,11 +1,6 @@
-import pandas as pd
-from typing import Optional
-from pathlib import Path
-import csv
-from datetime import date
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
-from numpy.ma.core import shape
+
+from datetime import datetime
+
 
 
 def get_time_period(date: str) -> list:
@@ -48,5 +43,6 @@ if __name__ == '__main__':
     print(get_time_period('2020-03-18'))
     print(get_time_period('2020-18-03 14:15:15'))
     print(get_time_period('08.08.2020 12:00:00'))
+    print(type(get_time_period('2020-03-18 14:32:15')[0]))
     print(get_welcome_of_time())
     print(type(get_welcome_of_time()))
